@@ -151,10 +151,10 @@ RUN set -eux; \
 
 VOLUME /var/www/html
 
-COPY moodle.conf /etc/apache2/sites-enabled/moodle.conf
+COPY moodle/moodle.conf /etc/apache2/sites-enabled/moodle.conf
 RUN sed -i "s/{{emailAddress}}/${MOODLE_EMAIL_ADDRESS}/g" /etc/apache2/sites-enabled/moodle.conf
 
-COPY entrypoint.sh /entrypoint
+COPY moodle/entrypoint.sh /entrypoint
 RUN dos2unix /entrypoint \
     && chmod +x /entrypoint
 
