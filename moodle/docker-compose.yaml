@@ -1,0 +1,31 @@
+version: "2.0"
+services:
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    networks:
+      - moodle
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+  moodle:
+    restart: always
+    networks:
+      - moodle
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BUILD_ENV: dev
+    container_name: lms-moodle
+    ports:
+      - "8081:80"
+    links:
+      - db
+    depends_on:
+      - db
+networks:
+  moodle:
+    driver: bridge
